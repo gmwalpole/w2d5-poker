@@ -102,9 +102,10 @@ class Hand
   def beats?(other_hand)
     hand_values = [:single,:pair,:two_pair,:three_of,:straight,
                   :flush,:full_house,:four_of,:straight_flush]
-    our_val = calculate_value
-    their_val = other_hand.calculate_value
-    hand_values.index(our_val) >= hand_values.index(their_val)
+    our_val = hand_values.index(calculate_value)
+    their_val = hand_values.index(other_hand.calculate_value)
+
+    our_val > their_val
   end
 
 end

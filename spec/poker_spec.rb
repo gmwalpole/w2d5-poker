@@ -158,6 +158,7 @@ describe Hand do
     let(:i) { Card.new(:spades, :nine) }
     let(:j) { Card.new(:spades, :five) }
     let(:k) { Card.new(:clubs, :eight) }
+    let(:l) { Card.new(:clubs, :five) }
     let(:other_hand) { Hand.new }
 
     it "compares singles" do
@@ -170,6 +171,22 @@ describe Hand do
     it "compares hands good" do
       other_hand.add_cards([a,d,j,i,h])
       subject.add_cards([f,g,k,i,a])
+
+      expect(subject.beats?(other_hand)).to eq(true)
+      expect(other_hand.beats?(subject)).to eq(false)
+    end
+
+    it "compares two_pair ties if both pairs tied" do
+      other_hand.add_cards([a,b,c,d,h])
+      subject.add_cards([a,b,c,d,k])
+
+      expect(subject.beats?(other_hand)).to eq(false)
+      expect(other_hand.beats?(subject)).to eq(true)
+    end
+
+    it "compares two_pair ties with lower pair different" do
+      other_hand.add_cards([a,j,c,l,h])
+      subject.add_cards([a,b,c,d,k])
 
       expect(subject.beats?(other_hand)).to eq(true)
       expect(other_hand.beats?(subject)).to eq(false)
